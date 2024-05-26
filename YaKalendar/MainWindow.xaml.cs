@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibSerdes;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static YaKalendar.SerDeser;
 
 namespace YaKalendar
 {
@@ -24,7 +24,7 @@ namespace YaKalendar
         {
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string path = desktopPath + "/AAA.json";
-            Serialize(zametka, path);
+            SerDeser.Serialize(zametka, path);
             InitializeComponent();
             DatePicker.SelectedDate = DateTime.Now;
         }
@@ -51,8 +51,8 @@ namespace YaKalendar
             zametka.RemoveAt(selected);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string path = desktopPath + "/AAA.json";
-            Serialize(zametka, path);
-            var allZametki = Deserialize<List<Zametk>>(path);
+            SerDeser.Serialize(zametka, path);
+            var allZametki = SerDeser.Deserialize<List<Zametk>>(path);
             var selectedDate = Convert.ToDateTime(DatePicker.SelectedDate);
             var filteredZametki = allZametki.Where(z => z.date.Date == selectedDate).ToList();
             Zam.ItemsSource = filteredZametki;
@@ -69,8 +69,8 @@ namespace YaKalendar
             zametka.Add(z);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string path = desktopPath + "/AAA.json";
-            Serialize(zametka, path);
-            var allZametki = Deserialize<List<Zametk>>(path);
+            SerDeser.Serialize(zametka, path);
+            var allZametki = SerDeser.Deserialize<List<Zametk>>(path);
             var selectedDate = Convert.ToDateTime(DatePicker.Text);
             var filteredZametki = allZametki.Where(za => za.date.Date == selectedDate).ToList();
             Zam.ItemsSource = filteredZametki;
@@ -84,15 +84,15 @@ namespace YaKalendar
             selectedZametk.description = _2.Text;
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string path = desktopPath + "/AAA.json";
-            Serialize(zametka, path);
-            zametka = Deserialize<List<Zametk>>(path);
+            SerDeser.Serialize(zametka, path);
+            zametka = SerDeser.Deserialize<List<Zametk>>(path);
             Zam.Items.Refresh();
         }
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string path = desktopPath + "/AAA.json";
-            var allZametki = Deserialize<List<Zametk>>(path);
+            var allZametki = SerDeser.Deserialize<List<Zametk>>(path);
             var selectedDate = Convert.ToDateTime(DatePicker.SelectedDate);
             var filteredZametki = allZametki.Where(za => za.date.Date == selectedDate).ToList();
             Zam.ItemsSource = filteredZametki;

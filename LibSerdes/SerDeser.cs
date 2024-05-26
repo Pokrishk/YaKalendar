@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 
-namespace YaKalendar
+namespace LibSerdes
 {
-    internal class SerDeser
+    public class SerDeser
     {
         public static T Deserialize<T>(string path)
         {
